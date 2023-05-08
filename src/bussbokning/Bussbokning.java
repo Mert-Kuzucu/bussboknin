@@ -342,10 +342,10 @@ public class Bussbokning {
     // Legit checkar användarens namn
 
     static String kollaNamn(String text) {
-        Scanner scan = new Scanner(System.in);
+        Scanner tagentbord = new Scanner(System.in);
 
         System.out.println(text);
-        String svar = scan.nextLine();
+        String svar = tagentbord.nextLine();
         if(svar.length() > 0){
             return svar;
         }
