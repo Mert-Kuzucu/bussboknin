@@ -39,10 +39,11 @@ public class Bussbokning {
         System.out.println("4. Visa passagerare");
         System.out.println("5. Visa lediga platser");
         System.out.println("6. Visa vinst");
+        // Avslutar programmet. 
         System.out.println("7. Sluta");
 
         int svar = tagentbord.nextInt();
-
+        // Case för vad användaren vill göra, retunerar menyn efter varje metod är slutförd. 
         switch (svar) {
             case 1 -> skapaBokning(info);
             case 2 -> avBoka(info);
@@ -80,7 +81,7 @@ public class Bussbokning {
     }
     static String[] avBoka(String[] info) {
         Scanner tagentbord = new Scanner(System.in);
-        System.out.println("Skriv ditt personnummer i formatet: YYYYMMDD eller för- och efternanmn.");
+        System.out.println("Skriv ditt personnummer i formatet: ÅÅÅÅMMDD eller för- och efternanmn.");
 
         return info;
     }
@@ -88,7 +89,7 @@ public class Bussbokning {
 
     static void hittaBokning(String[] info) {
         Scanner tagentbord = new Scanner(System.in);
-        System.out.println("Skriv ditt personnummer i formatet: YYYYMMDD eller skriv förnamn och efternamn");
+        System.out.println("Skriv ditt personnummer i formatet: ÅÅÅÅMMDD eller skriv förnamn och efternamn");
         Bokning(info, tagentbord.nextLine(), false);
     }
 //Updaterar platsStr för den valda platsen.
@@ -171,6 +172,7 @@ public class Bussbokning {
 
     static double räknaPris(int föddDatum) {
         int ålder = räknaÅlder(föddDatum);
+        // Räknar kostand beroende på ålder.
         if (ålder < 18) {
             return 149.90;
         } else if (ålder > 69) {
@@ -246,11 +248,11 @@ public class Bussbokning {
         String personnummer = platsFält[1];
         int föddDatum = Integer.parseInt(personnummer.substring(0, 4));
         int ålder = räknaÅlder(föddDatum);
-        if(ålder < 18){
+        if(ålder < 18){ // Kollar om person är minerårig
             personnummer = personnummer + " (under 18)";
         }
         if(valtFönster(Integer.parseInt(platsFält[0]))){
-            sätte = "windowseat:";
+            sätte = "fönsterplats:";
         }
         String x = platsFält[2]+" "+platsFält[3]+" "+ personnummer + " " + sätte + platsFält[0];
         System.out.println(x);
@@ -292,9 +294,9 @@ public class Bussbokning {
         for (int i = 0; i < a - 1; i++) {
             for (int j = 0; j < a - i - 1; j++) {
                 if (Integer.parseInt(människor[j]) > Integer.parseInt(människor[j + 1])){
-                    String temp = människor[j];
+                    String v = människor[j];
                      människor[j] = människor[j + 1];
-                    människor[j + 1] = temp;
+                    människor[j + 1] = v;
                 }
             }
         }
@@ -316,27 +318,28 @@ public class Bussbokning {
         System.out.println("Fel nummer");
         return fåSätte(tagentbord, oBokadePlatser);
     }
-    // Kollar om personnummret är i rätt format.  "YYYYMMDD"
+    // Kollar om personnummret är i rätt format.  "ÅÅÅÅMMDD".
 
     static String kollaPersonnummer() {
         Scanner tagentbord = new Scanner(System.in);
 
-        System.out.println("Skriv ditt personnumemr i formatet YYYYMMDD:");
+        System.out.println("Skriv ditt personnumemr i formatet ÅÅÅÅMMDD.:");
         int pN = 0;
         try{
             pN = tagentbord.nextInt();
             String personnummer = Integer.toString(pN);
             if(personnummer.length() == 8 &&
+                    // Kollar att användarens personnummer är logiskt. 
                     pN > 17000000 &&
                     pN < 20230501){
                 // checkar om inputen enbart är nummer och korrekt år
                 return personnummer;
-            }
+            }// Error catching
         } catch(Exception e){
             System.out.println("använd bara nummer");
 
-        }
-        System.out.println("Fel format av personnummret.");
+        } // Påminner att personnummret kan ha vart i fel format. 
+        System.out.println("Fel format av personnummret. ÅÅÅÅMMDD");
         return kollaPersonnummer();
     }
     // Legit checkar användarens namn
@@ -358,6 +361,7 @@ public class Bussbokning {
 
         System.out.println("Vill du ha en fönsterplats? 1 för Ja, 0 för nej");
         int fönster;
+        // Error catching, enbart 1 eller 0. 
         try
         {
             fönster = tagentbord.nextInt();
@@ -368,6 +372,6 @@ public class Bussbokning {
         if(fönster == 1 || fönster == 0){
             return fönster;
         }
-
+        // Retunerar fönsterplatsen
         return fåFönster();}
 }
